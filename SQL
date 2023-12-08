@@ -1,0 +1,18 @@
+CREATE TABLE Customers (
+    CustomerID SERIAL PRIMARY KEY,
+    CustomerName VARCHAR(255)
+);
+CREATE TABLE Sales (
+    SaleID SERIAL PRIMARY KEY,
+    CustomerID INT,
+    Gender VARCHAR(10),
+    Item VARCHAR(255),
+    Price DECIMAL(10, 2),
+    Quantity INT,
+    ShoppingMall VARCHAR(50),
+    PaymentMethod VARCHAR(20),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+INSERT INTO Customers (CustomerName) VALUES ('Customer1');
+INSERT INTO Sales (CustomerID, Gender, Item, Price, Quantity, StoreLocation, PaymentType)
+VALUES (1, 'Male', 'Product1', 20.99, 2, 'LocationA', 'Credit Card');
