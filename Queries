@@ -22,12 +22,12 @@ select shopping_mall as mall, sum(quantity) as total
 
 4) Gathering which gender buys the most of which category
 
-  WITH Totals AS (
+ WITH Totals AS (
     SELECT
         category,
         gender,
         SUM(quantity) AS total,
-        RANK() OVER (PARTITION BY category ORDER BY SUM(quantity) DESC) AS rnk
+        RANK() OVER (PARTITION BY category ORDER BY SUM(quantity) DESC) AS r
     FROM transactions
     NATURAL JOIN customer
     GROUP BY category, gender
@@ -37,6 +37,26 @@ SELECT
     gender,
     total
 FROM Totals
-WHERE rnk = 1;
+WHERE r = 1;
+
+5) Gathering which category sold at each mall
+
+WITH Categories_per_mall AS (
+    SELECT
+        shopping_mall,
+        category,
+        SUM(quantity) AS total,
+        ROW_NUMBER() OVER (PARTITION BY shopping_mall ORDER BY SUM(quantity) DESC) AS r
+    FROM transactions
+    NATURAL JOIN malls
+    GROUP BY shopping_mall, category
+)
+SELECT
+    shopping_mall,
+    category,
+    total
+FROM Categories_per_mall
+WHERE r = 1;
+
 
 
