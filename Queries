@@ -1,0 +1,6 @@
+Printing most bought category of item
+
+SELECT category, COUNT(category) AS total FROM transactions
+  GROUP BY category
+  ORDER BY total DESC
+  LIMIT 1;
