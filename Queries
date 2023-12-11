@@ -58,5 +58,12 @@ SELECT
 FROM Categories_per_mall
 WHERE r = 1;
 
+6) which mall is more expensive on average in given category
+
+select  shopping_mall as mall, category, round(avg(cast(selling_price_per_unit as numeric)), 2) as average_selling_price from transactions natural join malls
+group by  mall, category
+order by category
+
+
 
 
